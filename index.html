@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dr. Naol Dental Clinic – Woliso, Ethiopia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --blue:    #1E3A8A;
+      --blue-lt: #2E4FAD;
+      --teal:    #14B8A6;
+      --teal-lt: #0ED8C3;
+      --white:   #FFFFFF;
+      --bg:      #F0F4FF;
+      --surface: #FFFFFF;
+      --card:    #FFFFFF;
+      --text:    #1A202C;
+      --muted:   #64748B;
+      --border:  rgba(30,58,138,.12);
+      --shadow:  0 4px 24px rgba(30,58,138,.10);
+      --shadow-lg: 0 12px 48px rgba(30,58,138,.15);
+      --radius:  16px;
+      --nav-h:   70px;
+      --transition: .35s cubic-bezier(.4,0,.2,1);
+    }
+    [data-theme="dark"] {
+      --bg:      #0D1525;
+      --surface: #111C35;
+      --card:    #162040;
+      --text:    #E8EEFF;
+      --muted:   #94A3B8;
+      --border:  rgba(255,255,255,.08);
+      --shadow:  0 4px 24px rgba(0,0,0,.35);
+      --shadow-lg: 0 12px 48px rgba(0,0,0,.5);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--bg); color: var(--text);
+      transition: background var(--transition), color var(--transition);
+      overflow-x: hidden;
+    }
+    img { display: block; width: 100%; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Language */
+    :root:lang(en) .am { display: none !important; }
+    :root:lang(am) .en { display: none !important; }
+
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 96px 0; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Poppins', sans-serif; font-size: .78rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .12em; color: var(--teal); margin-bottom: 14px;
+    }
+    .section-label::before { content: ''; width: 28px; height: 2px; background: var(--teal); border-radius: 2px; }
+    h1,h2,h3,h4 { font-family: 'Poppins', sans-serif; line-height: 1.2; }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; color: var(--text); margin-bottom: 16px; }
+    .section-sub { color: var(--muted); font-size: 1.05rem; max-width: 560px; line-height: 1.7; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 50px; font-family: 'Poppins', sans-serif;
+      font-size: .92rem; font-weight: 600; cursor: pointer; border: none;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 4px 20px rgba(30,58,138,.35); }
+    .btn-primary:hover { background: var(--blue-lt); box-shadow: 0 8px 28px rgba(30,58,138,.45); }
+    .btn-teal { background: var(--teal); color: #fff; box-shadow: 0 4px 20px rgba(20,184,166,.35); }
+    .btn-teal:hover { background: var(--teal-lt); box-shadow: 0 8px 28px rgba(20,184,166,.45); }
+    .btn-outline { background: transparent; color: var(--blue); border: 2px solid var(--blue); }
+    .btn-outline:hover { background: var(--blue); color: #fff; }
+    [data-theme="dark"] .btn-outline { color: var(--teal); border-color: var(--teal); }
+    [data-theme="dark"] .btn-outline:hover { background: var(--teal); color: #fff; }
+
+    /* Scroll animations */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal-left.visible { opacity: 1; transform: none; }
+    .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal-right.visible { opacity: 1; transform: none; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      height: var(--nav-h); background: rgba(255,255,255,.85);
+      backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    [data-theme="dark"] nav { background: rgba(13,21,37,.88); }
+    nav.scrolled { box-shadow: var(--shadow); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo .logo-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+      display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.1rem;
+    }
+    .nav-logo .logo-text { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1rem; }
+    .nav-logo .logo-text span.brand-hl { color: var(--teal); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: .88rem; font-weight: 600; color: var(--muted); transition: color .2s; font-family: 'Poppins', sans-serif; }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-select {
+      background: var(--surface); color: var(--text); border: 1.5px solid var(--border);
+      border-radius: 50px; padding: 6px 12px; font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer; outline: none; transition: all .2s;
+    }
+    .lang-select:hover { border-color: var(--teal); }
+    .theme-toggle {
+      width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--border);
+      background: var(--surface); cursor: pointer; display: flex;
+      align-items: center; justify-content: center; font-size: 1rem;
+      color: var(--text); transition: all .2s;
+    }
+    .theme-toggle:hover { border-color: var(--teal); color: var(--teal); }
+    .nav-cta { padding: 10px 22px; font-size: .84rem; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
+    .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all .3s; }
+    .mobile-menu {
+      display: none; flex-direction: column; gap: 0;
+      position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 16px 24px 24px; z-index: 998; box-shadow: var(--shadow);
+    }
+    .mobile-menu a {
+      padding: 14px 0; font-family: 'Poppins', sans-serif; font-weight: 600;
+      font-size: .95rem; color: var(--text); border-bottom: 1px solid var(--border); transition: color .2s;
+    }
+    .mobile-menu a:last-child { border: none; }
+    .mobile-menu a:hover { color: var(--teal); }
+    .mobile-menu.open { display: flex; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-h);
+      background-image: url('images/hero-bg.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-color: #0D1F5C;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(
+        to right,
+        rgba(5, 12, 35, 0.62) 0%,
+        rgba(5, 12, 35, 0.30) 60%,
+        rgba(5, 12, 35, 0.10) 100%
+      );
+    }
+    .hero .container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start; 
+      width: 100%;
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      max-width: 580px; 
+      padding: 60px 0;
+      text-align: left; 
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(20,184,166,.20); border: 1px solid rgba(20,184,166,.45);
+      color: #0ED8C3; padding: 6px 16px; border-radius: 50px;
+      font-size: .78rem; font-weight: 600; font-family: 'Poppins', sans-serif;
+      letter-spacing: .06em; text-transform: uppercase; margin-bottom: 24px;
+      backdrop-filter: blur(8px);
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800;
+      color: #fff; line-height: 1.12; margin-bottom: 20px;
+    }
+    .hero h1 span.highlight { color: #0ED8C3; }
+    .hero-sub {
+      font-size: clamp(.95rem, 1.8vw, 1.1rem); color: rgba(255,255,255,.88);
+      line-height: 1.75; margin-bottom: 36px; max-width: 480px;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-btns .btn-primary { background: var(--teal); box-shadow: 0 4px 20px rgba(20,184,166,.4); }
+    .hero-btns .btn-primary:hover { background: var(--teal-lt); }
+    .hero-btns .btn-outline-white {
+      display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px;
+      border-radius: 50px; font-family: 'Poppins', sans-serif; font-size: .92rem;
+      font-weight: 600; cursor: pointer; background: rgba(255,255,255,.13); color: #fff;
+      border: 1.5px solid rgba(255,255,255,.45); backdrop-filter: blur(8px); transition: all .2s;
+    }
+    .hero-btns .btn-outline-white:hover { background: rgba(255,255,255,.22); transform: translateY(-2px); }
+    .hero-stats { display: flex; gap: 32px; margin-top: 52px; flex-wrap: wrap; }
+    .hero-stat { color: #fff; }
+    .hero-stat .num { font-family: 'Poppins', sans-serif; font-size: 1.6rem; font-weight: 800; color: #0ED8C3; line-height: 1; }
+    .hero-stat .lbl { font-size: .8rem; color: rgba(255,255,255,.7); margin-top: 4px; }
+    .hero-divider { width: 1px; background: rgba(255,255,255,.25); align-self: stretch; }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .about-img-wrap { position: relative; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg); }
+    .about-img-wrap img { height: 420px; }
+    .about-badge {
+      position: absolute; bottom: 24px; left: 24px; background: var(--blue); color: #fff;
+      padding: 14px 20px; border-radius: 14px; font-family: 'Poppins', sans-serif;
+      font-size: .85rem; font-weight: 600; box-shadow: 0 8px 24px rgba(30,58,138,.3); max-width: 200px; line-height: 1.4;
+    }
+    .about-badge .big { font-size: 1.5rem; font-weight: 800; display: block; }
+    .about-text .section-sub { max-width: 100%; }
+    .about-features { margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
+    .about-feature {
+      display: flex; align-items: flex-start; gap: 14px; padding: 16px;
+      background: var(--card); border-radius: 12px; border: 1px solid var(--border);
+      box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
+    }
+    .about-feature:hover { transform: translateX(6px); box-shadow: var(--shadow-lg); }
+    .about-feature .icon {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+      display: flex; align-items: center; justify-content: center; color: #fff; font-size: .9rem;
+    }
+    .about-feature h4 { font-size: .92rem; font-weight: 700; margin-bottom: 2px; }
+    .about-feature p { font-size: .82rem; color: var(--muted); }
+
+    /* ── SERVICES ── */
+    .services-bg { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .services-header { text-align: center; margin-bottom: 56px; }
+    .services-header .section-label { justify-content: center; }
+    .services-header .section-label::before { display: none; }
+    .services-header .section-label::after { content: ''; width: 28px; height: 2px; background: var(--teal); border-radius: 2px; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .service-card {
+      background: var(--card); border-radius: var(--radius); padding: 32px 28px;
+      border: 1px solid var(--border); box-shadow: var(--shadow); cursor: default;
+      transition: transform .25s, box-shadow .25s, border-color .25s; position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--teal));
+      transform: scaleX(0); transform-origin: left; transition: transform .35s;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--teal); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      width: 56px; height: 56px; border-radius: 14px; margin-bottom: 20px;
+      background: linear-gradient(135deg, rgba(30,58,138,.1), rgba(20,184,166,.15));
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: var(--blue); transition: background .25s;
+    }
+    [data-theme="dark"] .service-icon { background: linear-gradient(135deg, rgba(30,58,138,.35), rgba(20,184,166,.25)); color: var(--teal); }
+    .service-card:hover .service-icon { background: linear-gradient(135deg, var(--blue), var(--teal)); color: #fff; }
+    .service-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+    .service-card p { font-size: .87rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── WHY US ── */
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .why-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .why-card {
+      background: var(--card); border-radius: var(--radius); padding: 24px;
+      border: 1px solid var(--border); box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
+    }
+    .why-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .why-icon {
+      width: 48px; height: 48px; border-radius: 12px; margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+      display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1rem;
+    }
+    .why-card h3 { font-size: .95rem; font-weight: 700; margin-bottom: 6px; }
+    .why-card p { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+    .why-img { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg); position: relative; }
+    .why-img img { height: 460px; }
+    .why-img-badge {
+      position: absolute; top: 24px; right: 24px; background: var(--teal); color: #fff;
+      padding: 10px 16px; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: .8rem; font-weight: 700;
+      box-shadow: 0 4px 16px rgba(20,184,166,.4);
+    }
+
+    /* ── STATS ── */
+    .stats-section { background: linear-gradient(135deg, var(--blue) 0%, #0D5C6E 100%); padding: 80px 0; position: relative; overflow: hidden; }
+    .stats-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; position: relative; z-index: 1; }
+    .stat-card {
+      text-align: center; color: #fff; padding: 40px 24px; border-radius: var(--radius);
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); transition: background .2s, transform .2s;
+    }
+    .stat-card:hover { background: rgba(255,255,255,.11); transform: translateY(-4px); }
+    .stat-card .icon {
+      width: 60px; height: 60px; border-radius: 16px; margin: 0 auto 20px;
+      background: rgba(20,184,166,.25); border: 1px solid rgba(20,184,166,.4);
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--teal-lt);
+    }
+    .stat-card .num { font-family: 'Poppins', sans-serif; font-size: 2.8rem; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 8px; }
+    .stat-card .num span { color: var(--teal-lt); }
+    .stat-card .lbl { font-size: .9rem; color: rgba(255,255,255,.7); font-weight: 500; }
+
+    /* ── REVIEWS ── */
+    .reviews-section { background: var(--surface); }
+    .reviews-header { text-align: center; margin-bottom: 56px; }
+    .reviews-header .section-label { justify-content: center; }
+    .reviews-header .section-label::before { display: none; }
+    .reviews-header .section-label::after { content: ''; width: 28px; height: 2px; background: var(--teal); border-radius: 2px; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .review-card {
+      background: var(--card); border-radius: var(--radius); padding: 28px;
+      border: 1px solid var(--border); box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
+    }
+    .review-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .review-stars { display: flex; gap: 4px; margin-bottom: 16px; }
+    .review-stars i { color: #F59E0B; font-size: .9rem; }
+    .review-text { font-size: .92rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+    .review-author { display: flex; align-items: center; gap: 12px; }
+    .review-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+      display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'Poppins', sans-serif; font-size: .95rem; font-weight: 700;
+    }
+    .review-author .name { font-weight: 700; font-size: .88rem; }
+    .review-author .meta { font-size: .78rem; color: var(--muted); }
+    .google-tag { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: .75rem; color: var(--muted); }
+    .google-tag i { color: #4285F4; }
+
+    /* ── CTA ── */
+    .cta-section { padding: 96px 0; background: var(--bg); }
+    .cta-box {
+      background: linear-gradient(135deg, var(--blue), #0D5C6E);
+      border-radius: 24px; padding: 64px; text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-box::after { content: ''; position: absolute; width: 300px; height: 300px; border-radius: 50%; background: rgba(20,184,166,.12); top: -60px; right: -60px; }
+    .cta-box::before { content: ''; position: absolute; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,.05); bottom: -40px; left: -40px; }
+    .cta-icon { width: 72px; height: 72px; border-radius: 20px; margin: 0 auto 24px; background: rgba(20,184,166,.25); border: 1px solid rgba(20,184,166,.5); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: var(--teal-lt); position: relative; z-index: 1; }
+    .cta-box h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); color: #fff; margin-bottom: 14px; position: relative; z-index: 1; }
+    .cta-box p { color: rgba(255,255,255,.72); font-size: 1rem; margin-bottom: 36px; position: relative; z-index: 1; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+    .cta-realness { position: relative; z-index: 1; width: 100%; display: flex; justify-content: center; margin-top: 10px; }
+    .cta-phone { display: flex; align-items: center; gap: 10px; justify-content: center; margin-top: 20px; color: rgba(255,255,255,.6); font-size: .9rem; position: relative; z-index: 1; }
+    .cta-phone i { color: var(--teal-lt); }
+    .cta-phone strong { color: #fff; }
+
+    /* ── FOOTER ── */
+    footer { background: #080F22; color: rgba(255,255,255,.65); padding: 64px 0 32px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand .logo-text { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.1rem; color: #fff; }
+    .footer-brand .logo-text span.brand-hl { color: var(--teal); }
+    .footer-brand p { margin-top: 14px; font-size: .88rem; line-height: 1.7; max-width: 280px; }
+    .footer-col h4 { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: .9rem; color: #fff; margin-bottom: 20px; letter-spacing: .02em; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li { font-size: .87rem; display: flex; align-items: flex-start; gap: 10px; }
+    .footer-col ul li i { color: var(--teal); margin-top: 2px; font-size: .8rem; width: 14px; }
+    .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin-bottom: 24px; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: .82rem; }
+    .footer-bottom a { color: var(--teal); transition: color .2s; }
+    .footer-bottom a:hover { color: var(--teal-lt); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .about-grid, .why-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .stats-grid { grid-template-columns: 1fr; gap: 20px; max-width: 400px; margin: 0 auto; }
+    }
+    @media (max-width: 600px) {
+      .section { padding: 64px 0; }
+      .hero { min-height: 100svh; padding-top: calc(var(--nav-h) + 20px); }
+      .hero .container { justify-content: flex-start; }
+      .hero-content { max-width: 100%; }
+      .hero-stats { gap: 20px; }
+      .why-cards { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .cta-box { padding: 40px 24px; }
+      .nav-cta { display: none; }
+      .nav-right { gap: 8px; }
+      .lang-select { padding: 4px 8px; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="logo-icon"><i class="fa-solid fa-tooth"></i></div>
+      <div class="logo-text">
+        <span class="en">Dr. <span class="brand-hl">Naol</span> Dental</span>
+        <span class="am">የዶ/ር <span class="brand-hl">ናኦል</span> ክሊኒክ</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about"><span class="en">About</span><span class="am">ስለ እኛ</span></a></li>
+      <li><a href="#services"><span class="en">Services</span><span class="am">አገልግሎቶች</span></a></li>
+      <li><a href="#why"><span class="en">Why Us</span><span class="am">ለምን እኛን</span></a></li>
+      <li><a href="#reviews"><span class="en">Reviews</span><span class="am">አስተያየቶች</span></a></li>
+      <li><a href="#contact"><span class="en">Contact</span><span class="am">አድራሻ</span></a></li>
+    </ul>
+    <div class="nav-right">
+      <select id="langSelect" class="lang-select" aria-label="Select Language">
+        <option value="en">EN</option>
+        <option value="am">አማ</option>
+      </select>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <i class="fa-solid fa-moon" id="themeIcon"></i>
+      </button>
+      <a href="tel:+251000000000" class="btn btn-teal nav-cta">
+        <i class="fa-solid fa-phone"></i>
+        <span class="en">Call Now</span><span class="am">ይደውሉ</span>
+      </a>
+      <div class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()"><span class="en">About</span><span class="am">ስለ እኛ</span></a>
+  <a href="#services" onclick="closeMenu()"><span class="en">Services</span><span class="am">አገልግሎቶች</span></a>
+  <a href="#why" onclick="closeMenu()"><span class="en">Why Us</span><span class="am">ለምን እኛን</span></a>
+  <a href="#reviews" onclick="closeMenu()"><span class="en">Reviews</span><span class="am">አስተያየቶች</span></a>
+  <a href="#contact" onclick="closeMenu()"><span class="en">Contact</span><span class="am">አድራሻ</span></a>
+  <a href="tel:+251000000000" style="color:var(--teal)"><i class="fa-solid fa-phone"></i> <span class="en">Call Now</span><span class="am">አሁን ይደውሉ</span></a>
+</div>
+
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge reveal">
+        <i class="fa-solid fa-shield-heart"></i>
+        <span class="en">Trusted Local Dental Care</span>
+        <span class="am">የታመነ የጥርስ ህክምና</span>
+      </div>
+      <h1 class="reveal" style="transition-delay:.1s">
+        <span class="en">Modern Dentistry<br>with <span class="highlight">Gentle Care</span></span>
+        <span class="am">ዘመናዊ የጥርስ ህክምና<br><span class="highlight">በጥንቃቄ</span></span>
+      </h1>
+      <p class="hero-sub reveal" style="transition-delay:.2s">
+        <span class="en">Trusted dental care in Woliso helping you smile with confidence. We combine expertise with a warm, welcoming environment so every visit feels comfortable.</span>
+        <span class="am">በወሊሶ ጤናማ እና በራስ መተማመን ያለው ፈገግታ ለማረጋገጥ የታመነ እና ጥራት ያለው የጥርስ ህክምና እንሰጣለን።</span>
+      </p>
+      <div class="hero-btns reveal" style="transition-delay:.3s">
+        <a href="tel:+251000000000" class="btn btn-primary">
+          <i class="fa-solid fa-phone"></i>
+          <span class="en">Call Now</span><span class="am">አሁን ይደውሉ</span>
+        </a>
+        <a href="#contact" class="btn-outline-white">
+          <i class="fa-solid fa-location-dot"></i>
+          <span class="en">Visit Clinic</span><span class="am">ክሊኒኩን ይጎብኙ</span>
+        </a>
+      </div>
+      <div class="hero-stats reveal" style="transition-delay:.4s">
+        <div class="hero-stat">
+          <div class="num">500<span>+</span></div>
+          <div class="lbl"><span class="en">Patients Served</span><span class="am">የታከሙ ታካሚዎች</span></div>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat">
+          <div class="num">98<span>%</span></div>
+          <div class="lbl"><span class="en">Satisfaction Rate</span><span class="am">የደንበኛ እርካታ</span></div>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat">
+          <div class="num"><span class="en" style="font-size:1.1rem">Mon–Sat</span><span class="am" style="font-size:1rem">ሰኞ–ቅዳሜ</span></div>
+          <div class="lbl">8 AM – 8:20 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal-left">
+        <img src="images/about-clinic.jpg" alt="Dental clinic interior" style="height:420px"
+          onerror="this.src='https://images.unsplash.com/photo-1629909615957-be38d48fbbe4?w=600&q=80'" />
+        <div class="about-badge">
+          <span class="big"><span class="en">Woliso</span><span class="am">ወሊሶ</span></span>
+          <span class="en">Post Building, 3rd Floor</span><span class="am">ፖስታ ቤት ህንፃ፣ 3ኛ ፎቅ</span>
+        </div>
+      </div>
+      <div class="about-text reveal-right">
+        <div class="section-label"><span class="en">About Our Clinic</span><span class="am">ስለ ክሊኒካችን</span></div>
+        <h2 class="section-title">
+          <span class="en">Care You Can Trust,<br>Close to Home</span>
+          <span class="am">ሊተማመኑበት የሚችሉት ህክምና፣<br>በአቅራቢያዎ</span>
+        </h2>
+        <p class="section-sub">
+          <span class="en">Dr. Naol Dental Clinic was built on one simple belief — every person in Woliso deserves access to high-quality dental care delivered with warmth and professionalism. We treat every patient like family, ensuring comfort at every step of your visit.</span>
+          <span class="am">የዶ/ር ናኦል የጥርስ ህክምና ክሊኒክ የተገነባው በአንድ ቀላል እምነት ላይ ነው — በወሊሶ የሚገኝ እያንዳንዱ ሰው ከፍተኛ ጥራት ያለው የጥርስ ህክምና የማግኘት መብት አለው።</span>
+        </p>
+        
+        <p style="margin-top:12px;font-size:0.9rem;color:var(--teal);font-weight:600;">
+          <span class="en">Helping more people in Woliso discover your clinic online</span>
+        </p>
+        
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <h4><span class="en">Easily Accessible Location</span><span class="am">በቀላሉ ሊገኝ የሚችል ቦታ</span></h4>
+              <p><span class="en">Located at the Woliso Post Building, 3rd Floor — central and convenient for all residents.</span><span class="am">በወሊሶ ፖስታ ቤት ህንፃ፣ 3ኛ ፎቅ ላይ ይገኛል — ለሁሉም ነዋሪዎች ምቹ።</span></p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="icon"><i class="fa-solid fa-heart-pulse"></i></div>
+            <div>
+              <h4><span class="en">Patient-Centered Approach</span><span class="am">ታካሚን ማዕከል ያደረገ አቀራረብ</span></h4>
+              <p><span class="en">We listen, explain, and customize every treatment plan to fit your specific needs.</span><span class="am">እናዳምጣለን፣ እናብራራለን፣ ለእርስዎ ፍላጎቶች የሚስማማ እቅድ እናዘጋጃለን።</span></p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="icon"><i class="fa-solid fa-users"></i></div>
+            <div>
+              <h4><span class="en">Community Trusted</span><span class="am">በማህበረሰቡ የታመነ</span></h4>
+              <p><span class="en">Serving the Woliso community with honest, affordable, and compassionate dental care.</span><span class="am">የወሊሶን ማህበረሰብ በታማኝነትና አሳቢ በሆነ ህክምና በማገልገል ላይ።</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section services-bg" id="services">
+  <div class="container">
+    <div class="services-header">
+      <div class="section-label"><span class="en">What We Offer</span><span class="am">የምንሰጣቸው አገልግሎቶች</span></div>
+      <h2 class="section-title reveal"><span class="en">Our Dental Services</span><span class="am">የጥርስ ህክምና አገልግሎቶቻችን</span></h2>
+      <p class="section-sub reveal" style="margin:0 auto">
+        <span class="en">From routine checkups to emergency care — we've got every smile covered.</span>
+        <span class="am">ከመደበኛ ምርመራዎች እስከ ድንገተኛ ህክምና — ለእያንዳንዱ ፈገግታ መፍትሄ አለን።</span>
+      </p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal" style="transition-delay:.05s">
+        <div class="service-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+        <h3><span class="en">Dental Checkups</span><span class="am">የጥርስ ምርመራ</span></h3>
+        <p><span class="en">Comprehensive oral exams to assess your dental health, catch issues early, and keep your smile in top shape.</span><span class="am">የጥርስ ጤንነትዎን ለመገምገም እና ችግሮችን ቀድሞ ለማወቅ አጠቃላይ የአፍ ምርመራ።</span></p>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.1s">
+        <div class="service-icon"><i class="fa-solid fa-sparkles"></i></div>
+        <h3><span class="en">Teeth Cleaning</span><span class="am">ጥርስ ማፅዳት</span></h3>
+        <p><span class="en">Professional scaling and polishing to remove plaque and tartar buildup for a fresher, healthier mouth.</span><span class="am">ፕላክ እና ታርታርን በማስወገድ ጥርስን በባለሙያ ማፅዳት ለበለጠ ጤናማ አፍ።</span></p>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.15s">
+        <div class="service-icon"><i class="fa-solid fa-fill-drip"></i></div>
+        <h3><span class="en">Tooth Fillings</span><span class="am">ጥርስ ሙሌት</span></h3>
+        <p><span class="en">Durable and natural-looking fillings to restore decayed or damaged teeth and prevent further complications.</span><span class="am">የተበላሹ ጥርሶችን ለመጠገን ዘላቂ እና ተፈጥሯዊ መልክ ያላቸው ሙሌቶች።</span></p>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.2s">
+        <div class="service-icon"><i class="fa-solid fa-tooth"></i></div>
+        <h3><span class="en">Extractions</span><span class="am">ጥርስ መንቀል</span></h3>
+        <p><span class="en">Safe, gentle tooth removal performed with care to minimize discomfort and support smooth recovery.</span><span class="am">ህመምን ለመቀነስ እና ፈጣን ማገገምን ለመደገፍ ደህንነቱ የተጠበቀ የጥርስ መንቀል።</span></p>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.25s">
+        <div class="service-icon"><i class="fa-solid fa-truck-medical"></i></div>
+        <h3><span class="en">Emergency Dental Care</span><span class="am">ድንገተኛ የጥርስ ህክምና</span></h3>
+        <p><span class="en">Fast, responsive care for sudden toothaches, broken teeth, or dental injuries — when you need us most.</span><span class="am">ለድንገተኛ የጥርስ ህመም ወይም አደጋዎች — እኛን በሚፈልጉን ጊዜ ፈጣን ህክምና።</span></p>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.3s">
+        <div class="service-icon"><i class="fa-solid fa-book-open-reader"></i></div>
+        <h3><span class="en">Oral Hygiene Guidance</span><span class="am">የአፍ ንፅህና ትምህርት</span></h3>
+        <p><span class="en">Personalized tips and education to help you maintain a healthy mouth and prevent future dental problems.</span><span class="am">ጤናማ አፍ እንዲኖርዎት የሚረዱ ግላዊ ምክሮች እና ትምህርቶች።</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="why">
+  <div class="container">
+    <div class="why-grid">
+      <div>
+        <div class="section-label"><span class="en">Why Choose Us</span><span class="am">ለምን እኛን ይመርጣሉ</span></div>
+        <h2 class="section-title reveal">
+          <span class="en">The Dr. Naol<br>Difference</span>
+          <span class="am">የዶ/ር ናኦል<br>ልዩነት</span>
+        </h2>
+        <p class="section-sub reveal" style="margin-bottom:36px">
+          <span class="en">We've built a clinic where quality meets compassion — and where every patient feels valued from the moment they walk in.</span>
+          <span class="am">ጥራት ከርህራሄ ጋር የሚገናኝበትን ክሊኒክ ገንብተናል — እያንዳንዱ ታካሚ ከገባበት ጊዜ ጀምሮ ክብር የሚሰማው።</span>
+        </p>
+        <div class="why-cards">
+          <div class="why-card reveal" style="transition-delay:.05s">
+            <div class="why-icon"><i class="fa-solid fa-face-smile-beam"></i></div>
+            <h3><span class="en">Friendly Care</span><span class="am">ወዳጃዊ ህክምና</span></h3>
+            <p><span class="en">A warm, stress-free environment for patients of all ages.</span><span class="am">ለሁሉም የዕድሜ ክልል ሞቅ ያለ አካባቢ።</span></p>
+          </div>
+          <div class="why-card reveal" style="transition-delay:.1s">
+            <div class="why-icon"><i class="fa-solid fa-tag"></i></div>
+            <h3><span class="en">Affordable Services</span><span class="am">ተመጣጣኝ ዋጋ</span></h3>
+            <p><span class="en">Quality treatment at prices that fit every family's budget.</span><span class="am">ለሁሉም ቤተሰብ አቅም የሚስማማ ጥራት ያለው ህክምና።</span></p>
+          </div>
+          <div class="why-card reveal" style="transition-delay:.15s">
+            <div class="why-icon"><i class="fa-solid fa-user-doctor"></i></div>
+            <h3><span class="en">Experienced Staff</span><span class="am">ልምድ ያላቸው ባለሙያዎች</span></h3>
+            <p><span class="en">Skilled professionals committed to safe, effective care.</span><span class="am">ለደህንነት ቁርጠኛ የሆኑ ክህሎት ያላቸው ባለሙያዎች።</span></p>
+          </div>
+          <div class="why-card reveal" style="transition-delay:.2s">
+            <div class="why-icon"><i class="fa-solid fa-clock"></i></div>
+            <h3><span class="en">Convenient Hours</span><span class="am">ምቹ የስራ ሰዓት</span></h3>
+            <p><span class="en">Open Mon–Sat, 8:00 AM – 8:20 PM for your busy life.</span><span class="am">ሰኞ-ቅዳሜ፣ 8:00 AM – 8:20 PM ክፍት።</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="why-img reveal-right">
+        <img src="images/why-us.jpg" alt="Smiling patient"
+          onerror="this.src='https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80'" />
+        <div class="why-img-badge">
+          <i class="fa-solid fa-calendar-check"></i>
+          <span class="en">Mon – Sat Open</span><span class="am">ሰኞ - ቅዳሜ ክፍት</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card reveal">
+        <div class="icon"><i class="fa-solid fa-users"></i></div>
+        <div class="num" id="stat1">0+</div>
+        <div class="lbl"><span class="en">Patients Served</span><span class="am">የታከሙ ታካሚዎች</span></div>
+      </div>
+      <div class="stat-card reveal" style="transition-delay:.1s">
+        <div class="icon"><i class="fa-solid fa-heart-pulse"></i></div>
+        <div class="num" id="stat2">0%</div>
+        <div class="lbl"><span class="en">Patient Satisfaction</span><span class="am">የደንበኛ እርካታ</span></div>
+      </div>
+      <div class="stat-card reveal" style="transition-delay:.2s">
+        <div class="icon"><i class="fa-solid fa-award"></i></div>
+        <div class="num" style="font-size:1.8rem"><span class="en">Trusted</span><span class="am">የታመነ</span></div>
+        <div class="lbl"><span class="en">Local Dental Clinic in Woliso</span><span class="am">በወሊሶ የሚገኝ ክሊኒክ</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reviews-section" id="reviews">
+  <div class="container">
+    <div class="reviews-header">
+      <div class="section-label"><span class="en">Patient Reviews</span><span class="am">የታካሚዎች አስተያየት</span></div>
+      <h2 class="section-title reveal"><span class="en">What Our Patients Say</span><span class="am">ታካሚዎቻችን ምን ይላሉ</span></h2>
+      <p class="section-sub reveal" style="margin:0 auto">
+        <span class="en">Real experiences from real patients in Woliso.</span>
+        <span class="am">ከእውነተኛ ታካሚዎች የተገኙ ተሞክሮዎች።</span>
+      </p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal">
+        <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <p class="review-text">
+          <span class="en">"I've always been terrified of the dentist, but I had a tooth that had been hurting for weeks. Dr. Naol was so patient. He didn't rush, explained the filling process, and honestly, I barely felt a thing. Such a relief to have this clinic in Woliso."</span>
+          <span class="am">"ወደ ጥርስ ሀኪም መሄድ ሁሌም ያስፈራኝ ነበር፤ ነገር ግን ለሳምንታት ያመኝ የነበረ ጥርስ ነበረኝ። ዶ/ር ናኦል በጣም ታጋሽ ነበሩ። ሳይቸኩሉ የሙሌቱን ሂደት አስረዱኝ፣ እውነት ለመናገር ምንም ህመም አልተሰማኝም። ይህ ክሊኒክ በወሊሶ በመኖሩ ትልቅ እፎይታ ነው።"</span>
+        </p>
+        <div class="review-author">
+          <div class="review-avatar">A</div>
+          <div>
+            <div class="name">Almaz Kebede</div>
+            <div class="meta"><span class="en">Teeth Cleaning</span><span class="am">ጥርስ ማፅዳት</span></div>
+            <div class="google-tag"><i class="fa-brands fa-google"></i> <span class="en">Google Review</span><span class="am">የጉግል አስተያየት</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal" style="transition-delay:.08s">
+        <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <p class="review-text">
+          <span class="en">"My son chipped his front tooth playing football. We panicked and brought him here right away. The clinic was spotless, and they managed to fix his tooth so perfectly you can't even tell it was broken. The pricing was also very fair."</span>
+          <span class="am">"ልጄ ኳስ ሲጫወት የፊት ጥርሱን ተሰበረ። ደንግጠን ወዲያውኑ ወደዚህ አመጣነው። ክሊኒኩ በጣም ንጹህ ነበር፣ እና ጥርሱን ምንም እንዳይታወቅ አድርገው ጠገኑት። ዋጋውም በጣም ተመጣጣኝ ነበር።"</span>
+        </p>
+        <div class="review-author">
+          <div class="review-avatar">B</div>
+          <div>
+            <div class="name">Bekele Girma</div>
+            <div class="meta"><span class="en">Family Checkup</span><span class="am">የቤተሰብ ምርመራ</span></div>
+            <div class="google-tag"><i class="fa-brands fa-google"></i> <span class="en">Google Review</span><span class="am">የጉግል አስተያየት</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal" style="transition-delay:.16s">
+        <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <p class="review-text">
+          <span class="en">"Woke up at 3 AM with unbearable pain in my wisdom tooth. I called them first thing in the morning and they squeezed me in. The extraction was fast and the healing process has been super smooth. I won't go anywhere else now."</span>
+          <span class="am">"ከሌሊቱ 9 ሰዓት ላይ በማይቻል የጥርስ ህመም ከእንቅልፌ ነቃሁ። ጠዋት እንደነጋ ደወልኩላቸው እና ወዲያው ተቀበሉኝ። ጥርስ መንቀሉ ፈጣን ነበር፣ ማገገምም በጣም ቀላል ሆኖልኛል። ከዚህ በኋላ ወደ ሌላ ቦታ አልሄድም።"</span>
+        </p>
+        <div class="review-author">
+          <div class="review-avatar">S</div>
+          <div>
+            <div class="name">Selamawit Tadesse</div>
+            <div class="meta"><span class="en">Emergency Care</span><span class="am">ድንገተኛ ህክምና</span></div>
+            <div class="google-tag"><i class="fa-brands fa-google"></i> <span class="en">Google Review</span><span class="am">የጉግል አስተያየት</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="cta-icon"><i class="fa-solid fa-calendar-check"></i></div>
+      <h2><span class="en">Book Your Visit Today</span><span class="am">ቀጠሮዎን ዛሬውኑ ያስይዙ</span></h2>
+      <p>
+        <span class="en">Don't wait for dental pain to find us — schedule a checkup and keep your smile healthy all year.</span>
+        <span class="am">የጥርስ ህመም እስኪመጣ አይጠብቁ — ዓመቱን ሙሉ ፈገግታዎን ጤናማ ያድርጉ።</span>
+      </p>
+      
+      <div class="cta-btns">
+        <a href="tel:+251000000000" class="btn btn-teal">
+          <i class="fa-solid fa-phone"></i>
+          <span class="en">Call Now</span><span class="am">አሁን ይደውሉ</span>
+        </a>
+        <a href="https://t.me/YOUR_TELEGRAM" class="btn btn-primary" style="background:#229ED9;border-color:#229ED9;">
+          <i class="fa-brands fa-telegram"></i>
+          <span class="en">Telegram</span><span class="am">ቴሌግራም</span>
+        </a>
+        <a href="https://maps.google.com/?q=Woliso+Post+Building" target="_blank" class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.35)">
+          <i class="fa-solid fa-location-dot"></i>
+          <span class="en">Get Directions</span><span class="am">አቅጣጫዎችን ያግኙ</span>
+        </a>
+      </div>
+      
+      <div class="cta-realness">
+        <p style="margin-top:10px;color:rgba(255,255,255,0.7);font-size:0.9rem;">
+          <span class="en">Near Woliso Post Office – easy to find</span>
+          <span class="am">ከወሊሶ ፖስታ ቤት አጠገብ – በቀላሉ የሚገኝ</span>
+        </p>
+      </div>
+
+      <div class="cta-phone">
+        <i class="fa-solid fa-phone-volume"></i>
+        <span class="en">Call us: <strong>+251 — —— ————</strong>  |  Mon–Sat, 8:00 AM – 8:20 PM</span>
+        <span class="am">ይደውሉልን፦ <strong>+251 — —— ————</strong>  |  ሰኞ–ቅዳሜ, 8:00 AM – 8:20 PM</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:0">
+          <div class="logo-icon" style="background:linear-gradient(135deg,var(--blue),var(--teal))">
+            <i class="fa-solid fa-tooth"></i>
+          </div>
+          <div class="logo-text">
+            <span class="en">Dr. <span class="brand-hl">Naol</span> Dental Clinic</span>
+            <span class="am">የዶ/ር <span class="brand-hl">ናኦል</span> የጥርስ ህክምና</span>
+          </div>
+        </div>
+        <p>
+          <span class="en">Modern, compassionate dental care for the Woliso community. Your healthy smile is our greatest reward.</span>
+          <span class="am">ዘመናዊ እና ሩህሩህ የጥርስ ህክምና ለወሊሶ ማህበረሰብ።</span>
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4><span class="en">Quick Links</span><span class="am">ፈጣን ሊንኮች</span></h4>
+        <ul>
+          <li><i class="fa-solid fa-chevron-right"></i><a href="#about" style="color:inherit"><span class="en">About Us</span><span class="am">ስለ እኛ</span></a></li>
+          <li><i class="fa-solid fa-chevron-right"></i><a href="#services" style="color:inherit"><span class="en">Services</span><span class="am">አገልግሎቶች</span></a></li>
+          <li><i class="fa-solid fa-chevron-right"></i><a href="#why" style="color:inherit"><span class="en">Why Choose Us</span><span class="am">ለምን እኛን</span></a></li>
+          <li><i class="fa-solid fa-chevron-right"></i><a href="#reviews" style="color:inherit"><span class="en">Patient Reviews</span><span class="am">አስተያየቶች</span></a></li>
+          <li><i class="fa-solid fa-chevron-right"></i><a href="#contact" style="color:inherit"><span class="en">Book a Visit</span><span class="am">ቀጠሮ ያስይዙ</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><span class="en">Contact & Hours</span><span class="am">አድራሻ እና ሰዓት</span></h4>
+        <ul>
+          <li><i class="fa-solid fa-location-dot"></i><span class="en">Woliso Post Building, 3rd Floor, Woliso, Ethiopia</span><span class="am">ወሊሶ ፖስታ ቤት ህንፃ፣ 3ኛ ፎቅ</span></li>
+          <li><i class="fa-solid fa-phone"></i>+251 — ——— ————</li>
+          <li><i class="fa-solid fa-clock"></i><span class="en">Monday – Saturday</span><span class="am">ሰኞ – ቅዳሜ</span></li>
+          <li><i class="fa-solid fa-sun"></i>8:00 AM – 8:20 PM</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="footer-divider" />
+    <div class="footer-bottom">
+      <span><span class="en">© 2025 Dr. Naol Dental Clinic. All rights reserved.</span><span class="am">© 2025 የዶ/ር ናኦል የጥርስ ህክምና። መብቱ በህግ የተጠበቀ ነው።</span></span>
+      <span><span class="en">Built with care for the Woliso community</span><span class="am">ለወሊሶ ማህበረሰብ በጥንቃቄ የተሰራ</span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── LANGUAGE ── */
+  const langSelect = document.getElementById('langSelect');
+  const savedLang = localStorage.getItem('siteLang') || 'en';
+  document.documentElement.lang = savedLang;
+  langSelect.value = savedLang;
+  langSelect.addEventListener('change', e => {
+    document.documentElement.lang = e.target.value;
+    localStorage.setItem('siteLang', e.target.value);
+  });
+
+  /* ── THEME ── */
+  const html = document.documentElement;
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  html.setAttribute('data-theme', savedTheme);
+  updateIcon(savedTheme);
+  themeToggle.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    updateIcon(next);
+  });
+  function updateIcon(t) { themeIcon.className = t === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon'; }
+
+  /* ── NAVBAR SCROLL ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
+
+  /* ── MOBILE MENU ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  function closeMenu() { mobileMenu.classList.remove('open'); }
+  document.addEventListener('click', e => {
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMenu();
+  });
+
+  /* ── SCROLL REVEAL ── */
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => io.observe(el));
+
+  /* ── COUNTER ANIMATION ── */
+  function animateCounter(el, target, suffix) {
+    let start = null;
+    const step = ts => {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / 1800, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.floor(ease * target) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  let counted = false;
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !counted) {
+      counted = true;
+      animateCounter(document.getElementById('stat1'), 500, '+');
+      animateCounter(document.getElementById('stat2'), 98, '%');
+    }
+  }, { threshold: 0.4 }).observe(document.querySelector('.stats-section'));
+</script>
+</body>
+</html>
+
